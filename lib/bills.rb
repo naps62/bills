@@ -6,6 +6,7 @@ require "active_support/core_ext/string"
 
 require "bills/autoload"
 require "bills/config"
+require "bills/db"
 require "bills/version"
 
 module Bills
@@ -13,6 +14,8 @@ module Bills
     def configure
       @config ||= Config.new
       yield @config if block_given?
+      Bills::DB.connect
+      MoneyRails::Hooks.init
     end
 
     attr_reader :config

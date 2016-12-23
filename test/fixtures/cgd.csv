@@ -1,0 +1,6 @@
+Data mov. ;Data valor ;Descricao ;Debito ;Credito ;Saldo contabilistico ;Saldo disponivel ;
+20-12-2016;20-12-2016;Transaction5 ;;50,00;1.000,00;1.000,00;
+19-12-2016;19-12-2016;Transaction4 ;;40,00;1.000,00;1.000,00;
+19-12-2016;19-12-2016;Transaction3 ;30,00;;1.000,00;1.000,00;
+19-12-2016;15-12-2016;Transaction2 ;20,00;;1.000,00;1.000,00;
+19-12-2016;15-12-2016;Transaction1 ;10,00;;1.000,00;1.000,00;

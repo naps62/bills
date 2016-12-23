@@ -11,7 +11,9 @@ describe Movement::ImportFromCGD do
     end
 
     it "sanitizes monetary values" do
+      @importer.call
 
+      assert Movement.all.map(&:balance_cents).uniq == [1_000]
     end
   end
 end

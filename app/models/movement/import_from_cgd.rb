@@ -18,24 +18,26 @@ class Movement::ImportFromCGD
       csv_file,
       headers: true,
       col_sep: ";",
-      header_converters: method(:sanitized_header),
-      converters: method(:sanitized_field),
+      header_converters: method(:sanitized_header).to_proc,
+      converters: method(:sanitized_field).to_proc,
     ) do |row|
       import_movement(row)
     end
   end
 
   def import_movement(row)
-    Movement.where(
-      date: Date.new(row[:data_mov]),
+    a = Movement.where(
+      date: Date.parse(row[:data_mov]),
       description: row[:descricao],
       value: to_money(row[:credito]) - to_money(row[:debito]),
       balance: to_money(row[:saldo_disponivel])
     )
-  end
+
+    require 'pry'; binding.pry
+ end
 
   def sanitized_header(str)
-    str.downcase.parameterize.underscore
+    str.downcase.parameterize.underscore.to_sym
   end
 
   def sanitized_field(str)
@@ -44,7 +46,7 @@ class Movement::ImportFromCGD
 
   def to_money(str)
     Money.new(
-      str.gsub(",", "").to_f
+      (str ? str.gsub(",", "").to_f : 0)
     )
   end
 end
