@@ -5,7 +5,7 @@ gemspec
 
 gem "activesupport", "~> 5.0.1"
 gem "activerecord", "~> 5.0.1"
-gem "money-rails"
+gem "money"
 gem "pry"
 gem "sqlite3"
 gem "standalone_migrations"

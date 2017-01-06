@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 20161221173850) do
   create_table "movements", force: :cascade do |t|
     t.date     "date"
     t.string   "description"
-    t.integer  "value_cents"
-    t.integer  "balance_cents"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "value"
+    t.integer  "balance"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

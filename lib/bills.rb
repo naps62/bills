@@ -15,7 +15,8 @@ module Bills
       @config ||= Config.new
       yield @config if block_given?
       Bills::DB.connect
-      MoneyRails::Hooks.init
+      ActiveRecord::Type.register(:money, MoneyType)
+      @config
     end
 
     attr_reader :config

@@ -26,14 +26,12 @@ class Movement::ImportFromCGD
   end
 
   def import_movement(row)
-    a = Movement.where(
+    Movement.where(
       date: Date.parse(row[:data_mov]),
       description: row[:descricao],
       value: to_money(row[:credito]) - to_money(row[:debito]),
       balance: to_money(row[:saldo_disponivel])
-    )
-
-    require 'pry'; binding.pry
+    ).first_or_create
  end
 
   def sanitized_header(str)
@@ -45,8 +43,8 @@ class Movement::ImportFromCGD
   end
 
   def to_money(str)
-    Money.new(
-      (str ? str.gsub(",", "").to_f : 0)
+    Money.from_amount(
+      (str.present? ? str.gsub(".", "").gsub(",", ".").to_f : 0)
     )
   end
 end

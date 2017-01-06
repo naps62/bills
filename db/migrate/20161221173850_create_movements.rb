@@ -3,8 +3,8 @@ class CreateMovements < ActiveRecord::Migration[5.0]
     create_table :movements do |t|
       t.date :date
       t.string :description
-      t.integer :value_cents
-      t.integer :balance_cents
+      t.integer :value
+      t.integer :balance
 
       t.timestamps
     end
