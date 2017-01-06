@@ -10,6 +10,7 @@ gem "pry"
 gem "sqlite3"
 gem "standalone_migrations"
 gem "classifier-reborn"
+gem "highline"
 
 group :test do
   gem "database_cleaner"

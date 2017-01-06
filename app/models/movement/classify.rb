@@ -8,9 +8,19 @@ class Movement::Classify
   private
 
   def classify(movement)
-    return if movement.classified_at?
+    categories = if movement.categories.present?
+                   movement.categories
+                 else
+                   ask_categories(movement)
+                 end
 
-    movement.update classified_at: DateTime.now
+    classifier.train(movement.description, categories)
+  end
+
+  def ask_categories(movement)
+    categories = Highline.new.ask("Categories for #{movement.description} - #{movement.value.format}?")
+
+    movement.update categories: categories
   end
 
   def classifier

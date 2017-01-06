@@ -1,13 +1,12 @@
 require "test_helper"
 
 describe Classifier do
-  it "can learn how to classify equal movements" do
-    movement = build :movement, description: "Rent", categories: ["House"]
+  it "can learn how to classify equal strings" do
     classifier = Classifier.new
 
-    classifier.train_with_movement(movement)
+    classifier.train("Rent", ["House"])
 
-    assert classifier.classify(movement).first == "House"
+    assert classifier.classify("Rent").first == "House"
   end
 
   it "can learn how to classify similar movements" do
@@ -17,10 +16,10 @@ describe Classifier do
     movement4 = build :movement, description: "My second mercedes"
     classifier = Classifier.new
 
-    classifier.train_with_movement(movement1)
-    classifier.train_with_movement(movement2)
+    classifier.train("Rent", ["House"])
+    classifier.train("Buying a mercedes", ["Wasting"])
 
-    assert classifier.classify(movement3).first == "House"
-    assert classifier.classify(movement4).first == "Wasting"
+    assert classifier.classify("Half of my Rent").first == "House"
+    assert classifier.classify("My second mercedes").first == "Wasting"
   end
 end
