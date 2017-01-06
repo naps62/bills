@@ -9,3 +9,9 @@ require "minitest/spec"
 require "minitest/reporters"
 
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(color: true)]
+
+require "factory_girl"
+FactoryGirl.find_definitions
+class MiniTest::Spec
+  include FactoryGirl::Syntax::Methods
+end

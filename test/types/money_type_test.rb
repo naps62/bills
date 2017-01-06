@@ -1,17 +1,15 @@
 require "test_helper"
 
 describe MoneyType do
-  describe "#serialize" do
-    it "serializes money value" do
-      money = Money.from_amount(1000)
+  it "serializes money value" do
+    money = Money.from_amount(1000)
 
-      assert MoneyType.new.serialize(money) == 100000
-    end
+    assert MoneyType.new.serialize(money) == 100000
+  end
 
-    it "deserializes money value" do
-      money = Money.from_amount(1000)
+  it "deserializes money value" do
+    money = Money.from_amount(1000)
 
-      assert MoneyType.new.deserialize(100000) == money
-    end
+    assert MoneyType.new.deserialize(100000) == money
   end
 end

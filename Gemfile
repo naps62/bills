@@ -9,8 +9,10 @@ gem "money"
 gem "pry"
 gem "sqlite3"
 gem "standalone_migrations"
+gem "classifier-reborn"
 
 group :test do
   gem "database_cleaner"
   gem "minitest-reporters"
+  gem "factory_girl"
 end

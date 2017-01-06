@@ -16,6 +16,7 @@ module Bills
       yield @config if block_given?
       Bills::DB.connect
       ActiveRecord::Type.register(:money, MoneyType)
+      ActiveRecord::Type.register(:word_list, WordListType)
       @config
     end
 
