@@ -7,25 +7,36 @@ class Movement::Classify
   private
 
   def train
-    Movement.classified.map do
-      classifier.train(movement.description, categories)
+    Movement.classified.map do |movement|
+      classifier.train(movement.description, movement.categories)
     end
   end
 
-  def classify(movement)
-    Movement.unclassified.map do
+  def classify
+    Movement.unclassified.map do |movement|
       categories = guess(movement) || ask(movement)
-      classifier.train(movement.description, categories)
+      movement.update categories: categories
+
+      if movement.categories.any?
+        classifier.train(movement.description, movement.categories)
+      end
     end
   end
 
-  def ask_categories(movement)
-    categories = Highline.new.ask("Categories for #{movement.description} - #{movement.value.format}?")
+  def guess(movement)
+    nil
+  end
 
-    movement.update categories: categories
+  def ask(movement)
+    question = <<~TXT
+      #{movement.details}
+      What are the categories for this movement?
+    TXT
+
+    categories = HighLine.new.ask(question)
   end
 
   def classifier
-    @classifier ||= Classifier.instance
+    @classifier ||= Classifier.new
   end
 end
