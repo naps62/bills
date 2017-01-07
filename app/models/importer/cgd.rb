@@ -1,6 +1,6 @@
 require "csv"
 
-class Movement::ImportFromCGD
+class Importer::CGD
   def initialize(csv_file:)
     @csv_file = csv_file
   end

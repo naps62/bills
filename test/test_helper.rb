@@ -7,11 +7,22 @@ end
 require "minitest/autorun"
 require "minitest/spec"
 require "minitest/reporters"
+require "factory_girl"
+require "database_cleaner"
 
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(color: true)]
-
-require "factory_girl"
 FactoryGirl.find_definitions
-class MiniTest::Spec
+DatabaseCleaner.strategy = :transaction
+DatabaseCleaner.clean_with(:truncation)
+
+class Minitest::Spec
   include FactoryGirl::Syntax::Methods
+
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
 end

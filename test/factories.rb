@@ -3,5 +3,6 @@ FactoryGirl.define do
     description { "lorem ipsum" }
     value { Money.from_amount(10) }
     balance { Money.from_amount(10) }
+    categories []
   end
 end

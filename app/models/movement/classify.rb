@@ -1,20 +1,22 @@
 class Movement::Classify
   def call
-    Movement.map do
-      classifier.train(movement)
-    classifier.save
+    train
+    classify
   end
 
   private
 
-  def classify(movement)
-    categories = if movement.categories.present?
-                   movement.categories
-                 else
-                   ask_categories(movement)
-                 end
+  def train
+    Movement.classified.map do
+      classifier.train(movement.description, categories)
+    end
+  end
 
-    classifier.train(movement.description, categories)
+  def classify(movement)
+    Movement.unclassified.map do
+      categories = guess(movement) || ask(movement)
+      classifier.train(movement.description, categories)
+    end
   end
 
   def ask_categories(movement)

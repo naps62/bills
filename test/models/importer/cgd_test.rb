@@ -1,8 +1,8 @@
 require "test_helper"
 
-describe Movement::ImportFromCGD do
+describe Importer::CGD do
   before do
-    @importer = Movement::ImportFromCGD.new(csv_file: "test/fixtures/cgd.csv")
+    @importer = Importer::CGD.new(csv_file: "test/fixtures/cgd.csv")
   end
 
   describe "sanitized_header" do

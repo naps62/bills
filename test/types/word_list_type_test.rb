@@ -7,10 +7,16 @@ describe WordListType do
     assert WordListType.new.serialize(words) == "a,b,c"
   end
 
-  it "keeps strings as they are" do
-    words = "a b c"
+  it "parameterizes and downcases each value" do
+    words = ["a b", "cD"]
 
-    assert WordListType.new.serialize(words) == "a b c"
+    assert WordListType.new.serialize(words) == "a-b,cd"
+  end
+
+  it "keeps strings as they are" do
+    words = "a-b-c"
+
+    assert WordListType.new.serialize(words) == "a-b-c"
   end
 
   it "deserializes comma-separated word lists value" do
