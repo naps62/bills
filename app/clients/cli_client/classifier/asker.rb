@@ -1,4 +1,4 @@
-class Clients::CLI::Classifier::Asker
+class CLIClient::Classifier::Asker
   def initialize(movement:)
     @movement = movement
   end
@@ -13,7 +13,11 @@ class Clients::CLI::Classifier::Asker
       What are the categories for this movement?
     TXT
 
-    categories = HighLine.new.ask(question)
+    categories = terminal.ask(question)
     categories.split(",")
+  end
+
+  def terminal
+    @terminal ||= Config.adapter.new
   end
 end

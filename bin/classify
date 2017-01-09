@@ -3,6 +3,6 @@
 require "bills"
 
 Bills.configure
-Importer.cgd csv: "data/2016.csv"
-puts Movement.classified.printable_table
-Movement::Classify.new.call
+
+Clients::CLI::Importer.cgd(csv: "data/2016.csv")
+Clients::CLI::Classify.new.call

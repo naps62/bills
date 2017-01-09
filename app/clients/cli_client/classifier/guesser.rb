@@ -1,11 +1,11 @@
-class Clients::CLI::Classifier::Guesser
+class CLIClient::Classifier::Guesser
   def intialize(classifier:)
     @classifier = classifier
   end
 
 
   def call
-    puts "\n\nAttempting to guess categories for movement ##{movement.id}"
+    terminal.print "\n\nAttempting to guess categories for movement ##{movement.id}"
 puts "\n"
     candidates = classifier.classifications(movement.description)
 
@@ -18,5 +18,9 @@ puts "\n"
     if filtered_candidates.present?
       puts BayesClassifier.printable_table(filtered_candidates)
     end
+  end
+
+  def terminal
+    @terminal ||= Config.adapter.new
   end
 end

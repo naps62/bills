@@ -1,4 +1,4 @@
-class Clients::CLI::Classifier
+class CLIClient::Classifier
   def call
     train
     classify
@@ -24,19 +24,11 @@ class Clients::CLI::Classifier
   end
 
   def guess(movement)
-    Movement::Guesser.new(classifier: classifier).call
+    Guesser.new(classifier: classifier, movement: movement).call
   end
 
   def ask(movement)
-    question = <<-TXT.gsub(/^\s+/, "")
-
-      Cannot guess this movement:
-      #{movement.details}
-      What are the categories for this movement?
-    TXT
-
-    categories = HighLine.new.ask(question)
-    categories.split(",")
+    Asker.new(classifier: classifier, movement: movement).call
   end
 
   def classifier
