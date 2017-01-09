@@ -1,12 +1,12 @@
 require "test_helper"
 
-describe Classifier do
+describe BayesClassifier do
   it "can learn how to classify equal strings" do
-    classifier = Classifier.new
+    classifier = BayesClassifier.new
 
     classifier.train("Rent", ["House"])
 
-    assert classifier.classify("Rent").first == "House"
+    assert classifier.classify("Rent") == "House"
   end
 
   it "can learn how to classify similar movements" do
@@ -14,12 +14,12 @@ describe Classifier do
     movement2 = build :movement, description: "Buying a mercedes", categories: ["Wasting"]
     movement3 = build :movement, description: "Half of my Rent"
     movement4 = build :movement, description: "My second mercedes"
-    classifier = Classifier.new
+    classifier = BayesClassifier.new
 
     classifier.train("Rent", ["House"])
     classifier.train("Buying a mercedes", ["Wasting"])
 
-    assert classifier.classify("Half of my Rent").first == "House"
-    assert classifier.classify("My second mercedes").first == "Wasting"
+    assert classifier.classify("Half of my Rent") == "House"
+    assert classifier.classify("My second mercedes") == "Wasting"
   end
 end

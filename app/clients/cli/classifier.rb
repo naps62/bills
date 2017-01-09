@@ -1,4 +1,4 @@
-class Movement::Classify
+class Clients::CLI::Classifier
   def call
     train
     classify
@@ -13,7 +13,7 @@ class Movement::Classify
   end
 
   def classify
-    Movement.unclassified.map do |movement|
+    Movement.unclassified.shuffle.map do |movement|
       categories = guess(movement) || ask(movement)
       movement.update categories: categories
 
@@ -24,19 +24,22 @@ class Movement::Classify
   end
 
   def guess(movement)
-    nil
+    Movement::Guesser.new(classifier: classifier).call
   end
 
   def ask(movement)
-    question = <<~TXT
+    question = <<-TXT.gsub(/^\s+/, "")
+
+      Cannot guess this movement:
       #{movement.details}
       What are the categories for this movement?
     TXT
 
     categories = HighLine.new.ask(question)
+    categories.split(",")
   end
 
   def classifier
-    @classifier ||= Classifier.new
+    @classifier ||= BayesClassifier.new
   end
 end

@@ -11,6 +11,7 @@ gem "sqlite3"
 gem "standalone_migrations"
 gem "classifier-reborn"
 gem "highline"
+gem "terminal-table"
 
 group :test do
   gem "database_cleaner"

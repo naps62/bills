@@ -1,11 +1,11 @@
 require "csv"
 
 class Importer::CGD
-  def initialize(csv_file:)
-    @csv_file = csv_file
+  def initialize(csv:)
+    @csv = csv
   end
 
-  attr_reader :csv_file
+  attr_reader :csv
 
   def call
     ActiveRecord::Base.transaction do
@@ -14,15 +14,18 @@ class Importer::CGD
   end
 
   def import_from_csv
+    ids = []
     CSV.foreach(
-      csv_file,
+      csv,
       headers: true,
       col_sep: ";",
       header_converters: method(:sanitized_header).to_proc,
       converters: method(:sanitized_field).to_proc,
     ) do |row|
-      import_movement(row)
+      ids << import_movement(row).id
     end
+
+    Movement.where(id: ids)
   end
 
   def import_movement(row)

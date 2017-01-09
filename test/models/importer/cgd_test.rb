@@ -2,7 +2,7 @@ require "test_helper"
 
 describe Importer::CGD do
   before do
-    @importer = Importer::CGD.new(csv_file: "test/fixtures/cgd.csv")
+    @importer = Importer::CGD.new(csv: "test/fixtures/cgd.csv")
   end
 
   describe "sanitized_header" do

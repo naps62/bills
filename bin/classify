@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bills"
+
+Bills.configure
+Importer.cgd csv: "data/2016.csv"
+puts Movement.classified.printable_table
+Movement::Classify.new.call

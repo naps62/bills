@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require "bills"
+
+
+Bills.configure
+
+category = ARGV.first.parameterize
+
+Movement.classified.each do |c|
+  if c.categories.include? category
+    c.update categories: (c.categories - [category])
+  end
+end
